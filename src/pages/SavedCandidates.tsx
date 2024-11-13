@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Candidate } from '../interfaces/Candidate.interface';
 
 const SavedCandidates: React.FC = () => {
-  const [savedCandidates, setSavedCandidates] = useState<any[]>([]);
+  const [savedCandidates, setSavedCandidates] = useState<Candidate[]>([]);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('savedUsers') || '[]');
@@ -21,8 +22,13 @@ const SavedCandidates: React.FC = () => {
         <ul>
           {savedCandidates.map((user) => (
             <li key={user.id}>
+              <img src={user.avatar_url} alt={user.login} width="50" />
+              <p>Name: {user.name || user.login}</p>
+              <p>Location: {user.location || 'Not available'}</p>
+              <p>Email: {user.email || 'Not available'}</p>
+              <p>Company: {user.company || 'Not available'}</p>
               <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-                {user.login}
+                GitHub Profile
               </a>
               <button onClick={() => removeCandidate(user.login)}>Remove</button>
             </li>
