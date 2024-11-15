@@ -1,33 +1,75 @@
-# React + TypeScript + Vite
+# Hub scout
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-Currently, two official plugins are available:
+## Overview
 
-* [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md), which uses [Babel](https://babeljs.io/) for Fast Refresh
-* [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc), which uses [SWC](https://swc.rs/) for Fast Refresh
+This project is a **React-based** application that allows users to search for GitHub users and view their profiles. It fetches data from the **GitHub Users API** and displays information about GitHub users based on the search query provided.
 
-## Expanding the ESLint configuration
+## Features
 
-If you're developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Search GitHub Users:** Enter a username or a search term to find GitHub users.
+- **Display User Information:** View details like username, avatar, profile URL, and additional user stats.
+- **Responsive Design:** Optimized for both desktop and mobile viewing.
+- **Error Handling:** Displays meaningful error messages for failed requests (e.g., unauthorized access, rate limits).
 
-* Configure the top-level `parserOptions` property as follows:
+## Technologies Used
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **Frontend:** React, TypeScript, React Router
+- **API:** GitHub REST API
+- **Styling:** Bootstrap (with customizations), CSS
+- **Build Tools:** Vite
 
-* Replace `plugin:@typescript-eslint/recommended` with `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`.
-* Optionally, add `plugin:@typescript-eslint/stylistic-type-checked`.
-* Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` and `plugin:react/jsx-runtime` to the `extends` list.
+## Installation
 
----
-© 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+### Prerequisites
+- **Node.js** and **npm** installed on your machine
+- A **GitHub Personal Access Token** with read-only access to public data
+
+### Steps
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yourusername/github-user-search.git
+   cd github-user-search
+2. **Install Dependencies:**
+   ```bash
+   npm install
+3. **Setup the Environment Variables:**
+   ```bash
+   VITE_GITHUB_TOKEN=your_github_token_here
+4. **Run the Application:**
+   ```bash
+   npm run dev
+4. **Build the Application:**
+   ```bash
+   npm run build
+
+## 🚀 Usage
+
+1. Open your browser and go to [http://localhost:3000](http://localhost:3000).
+2. Enter a GitHub username in the search bar.
+3. Click **Search** to view the user's GitHub profile information.
+
+## Contributing
+- **Fork the Repository**
+- **Create a New Branch:** git checkout -b feature-branch
+- **Make your Changes** 
+- **Commit Your Changes:** git commit -m "Add new feature"
+- **Push to the branch:** git push origin feature-branch
+- **Create a new pull request**
+
+## License
+- **This project is licensed under the MIT License**
+
+## Questions
+- **If you have any questions about the project, feel free to contact me:**
+- GitHub: https://github.com/jakestair
+- Email: jacob.watson00@yahoo.com
