@@ -1,50 +1,67 @@
-// src/components/CandidateSearch.tsx
 import React, { useState } from 'react';
-import { searchGithub, searchGithubUser } from '../api/API';
-
-interface Candidate {
-  id: number;
-  login: string;
-  avatar_url: string;
-  html_url: string;
-}
+import { searchGithub } from "../api/API"
 
 const CandidateSearch: React.FC = () => {
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
-  const [message, setMessage] = useState<string>('No more candidates are available');
+  const [candidates, setCandidates] = useState<any[]>([]); // Just using `any[]` for simplicity
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
-  // Function to fetch candidates
   const fetchCandidates = async () => {
-    const data = await searchGithub();
-    if (data.length) {
+    if (!searchTerm) {
+      setMessage('Please enter a search term');
+      return;
+    }
+    searchGithub(searchTerm).then((data: any) => {
+      if (!data) {
+        setMessage('No candidates found or invalid response');
+        setCandidates([]);
+        return;
+      }
       setCandidates(data);
       setMessage('Candidates loaded');
-    } else {
-      setMessage('No candidates found. Try again later.');
-    }
-  };
+    });
+  }
 
-  // Function to fetch a specific candidate's details
-  const fetchCandidateDetails = async (username: string) => {
-    const candidate = await searchGithubUser(username);
-    setSelectedCandidate(candidate);
-  };
+    // try {
+      // Already done in the API.tsx file
+// const response = await fetch(`https://api.github.com/search/users?q=${searchTerm}`, {
+//   headers: {
+//     Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+//   },
+// });
+
+
+  //     const data = await response.json();
+  //     console.log('Fetched data:', data);
+
+  //     if (!response.ok || !data.items) {
+  //       setMessage('No candidates found or invalid response');
+  //       setCandidates([]);
+  //       return;
+  //     }
+
+  //     setCandidates(data.items);  // Use the fetched data to update state
+  //     setMessage('Candidates loaded');
+  //   } catch (err) {
+  //     console.error('Error fetching candidates:', err);
+  //     setMessage('An error occurred while fetching candidates.');
+  //   }
+  // };
 
   return (
     <div>
-      <h1>Candidate Search</h1>
-
-      {/* Button to Load Candidates */}
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search GitHub users"
+      />
       <button onClick={fetchCandidates}>Load Candidates</button>
-
-      {/* Display Message */}
       <p>{message}</p>
 
-      {/* List of Candidates */}
       {candidates.length > 0 && (
         <ul>
-          {candidates.map((candidate) => (
+          {candidates.map((candidate: any) => (
             <li key={candidate.id}>
               <img
                 src={candidate.avatar_url}
@@ -52,41 +69,12 @@ const CandidateSearch: React.FC = () => {
                 width={50}
                 height={50}
               />
-              <a
-                href={candidate.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">
                 {candidate.login}
               </a>
-              <button onClick={() => fetchCandidateDetails(candidate.login)}>
-                View Details
-              </button>
             </li>
           ))}
         </ul>
-      )}
-
-      {/* Display Selected Candidate Details */}
-      {selectedCandidate && (
-        <div>
-          <h2>{selectedCandidate.login}</h2>
-          <img
-            src={selectedCandidate.avatar_url}
-            alt={selectedCandidate.login}
-            width={100}
-            height={100}
-          />
-          <p>
-            <a
-              href={selectedCandidate.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub Profile
-            </a>
-          </p>
-        </div>
       )}
     </div>
   );

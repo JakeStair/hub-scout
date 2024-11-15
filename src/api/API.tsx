@@ -1,29 +1,40 @@
-// src/api/API.ts
+console.log(import.meta.env.VITE_GITHUB_TOKEN);
 
-// Function to search for random GitHub users
-const searchGithub = async () => {
+
+const searchGithub = async (searchTerm: string) => {
   try {
-    const start = Math.floor(Math.random() * 100000000) + 1;
-    const response = await fetch(
-      `https://api.github.com/users?since=${start}`,
-      {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-        },
-      }
-    );
-    const data = await response.json();
+    // Direct API call to GitHub with the Authorization header using your token
+    const response = await fetch(`https://api.github.com/search/users?q=${searchTerm}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,  // Make sure your token is set in the environment
+      },
+    });
+    // Check if the response is successful
     if (!response.ok) {
-      throw new Error('Invalid API response, check the network tab');
+      throw new Error(`Failed to fetch data: ${response.statusText}`);
     }
-    return data;
+
+    // Parse the JSON data from the response
+    const data = await response.json();
+console.log(data);
+    // Check if the 'items' property exists in the response
+    if (data && data.items) {
+      console.log('Fetched GitHub data:', data);
+      return data.items; // Return the list of users
+    } else {
+      throw new Error('No users found in the response.');
+    }
+
   } catch (err) {
-    console.error('An error occurred in searchGithub:', err);
-    return [];
+    console.error('Error fetching GitHub data:', err);
+    return []; // Return an empty array in case of error
   }
 };
 
-// Function to search for a specific GitHub user by username
+
+
+
 const searchGithubUser = async (username: string) => {
   try {
     const response = await fetch(`https://api.github.com/users/${username}`, {
@@ -33,11 +44,11 @@ const searchGithubUser = async (username: string) => {
     });
     const data = await response.json();
     if (!response.ok) {
-      throw new Error('Invalid API response, check the network tab');
+      throw new Error('invalid API response, check the network tab');
     }
     return data;
   } catch (err) {
-    console.error('An error occurred in searchGithubUser:', err);
+    // console.log('an error occurred', err);
     return {};
   }
 };
