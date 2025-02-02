@@ -11,6 +11,7 @@ const CandidateSearch: React.FC = () => {
       return userInformation.login
     })
     setCandidateList(response)
+    console.log(response);
     await fetchCandidate(response[0])
   }
   const fetchCandidate = async (username: string) => {
