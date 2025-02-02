@@ -1,19 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-const Nav: React.FC = () => {
+import { Link, useLocation } from 'react-router-dom';
+const Nav = () => {
+  // TODO: Add necessary code to display the navigation bar and link between the pages
+  const page = useLocation().pathname
   return (
-    <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-      <ul style={{ display: 'flex', gap: '1rem', listStyle: 'none' }}>
-        <li>
-          <Link to="/">Candidate Search</Link>
-        </li>
-        <li>
-          <Link to="/SavedCandidates">Saved Candidates</Link>
-        </li>
-      </ul>
-    </nav>
-  );
+    <>
+    {page === '/SavedCandidates'?(
+      <Link to='/'>Home</Link>
+    ):(
+      <Link to='/SavedCandidates'>Saved Candidates</Link>
+    )}
+    </>
+  )
 };
-
 export default Nav;
